@@ -47,4 +47,10 @@ describe Cell do
     it { is_expected.to include(world.cell_at(3, 3)) }
     it { is_expected.to have_exactly(8).neighbours }
   end
+
+  describe '#alive_neighbours' do
+    subject { cell.alive_neighbours }
+    before { world.cell_at(2, 3).toggle }
+    it { is_expected.to include(world.cell_at(2, 3)) }
+  end
 end

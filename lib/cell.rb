@@ -22,6 +22,10 @@ class Cell
     neighbours_coordinates.map { |x, y| world.cell_at(x, y) } - [self]
   end
 
+  def alive_neighbours
+    neighbours.select(&:alive?)
+  end
+
   private
 
   def neighbours_coordinates
