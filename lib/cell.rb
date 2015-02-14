@@ -3,10 +3,19 @@ class Cell
 
   def initialize(world, x, y)
     @world, @x, @y = world, x, y
+    @dead = true
   end
 
   def dead?
-    true
+    @dead
+  end
+
+  def alive?
+    !@dead
+  end
+
+  def toggle
+    @dead = !@dead
   end
 
   def neighbours
