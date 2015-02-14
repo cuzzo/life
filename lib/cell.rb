@@ -19,7 +19,7 @@ class Cell
   end
 
   def neighbours
-    neighbours_coordinates.map { |x, y| world.cell_at(x, y) } - [self]
+    neighbours_coordinates.map { |x, y| world.cell_at(x, y) }.compact - [self]
   end
 
   def alive_neighbours

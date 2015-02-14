@@ -27,4 +27,28 @@ describe World do
       it { is_expected.to eq world.cells[6] }
     end
   end
+
+  describe '#next_generation' do
+    subject do
+      world.next_generation!
+      cell
+    end
+    let(:cell) { world.cell_at(0, 0) }
+
+    context 'live cell with fewer than two live neighbours dies' do
+      context 'with no live neighbours' do
+        before { cell.toggle }
+        it { is_expected.to be_dead }
+      end
+
+      context 'with one live neighbour' do
+        let(:neighbour) { cell.neighbours.first }
+        before do
+          cell.toggle
+          neighbour.toggle
+        end
+        it { is_expected.to be_dead }
+      end
+    end
+  end
 end

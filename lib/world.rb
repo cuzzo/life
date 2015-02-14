@@ -19,4 +19,14 @@ class World
   def cell_at(x, y)
     @cells[x][y] if @cells[x]
   end
+
+  def next_generation!
+    alive_cells.select { |cell| cell.alive_neighbours.length < 2 }.each(&:toggle)
+  end
+
+  private
+
+  def alive_cells
+    cells.select(&:alive?)
+  end
 end
