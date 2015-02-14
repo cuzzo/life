@@ -6,7 +6,7 @@ class World
     height.times do |x|
       @cells << []
       width.times do |y|
-        cell = Cell.new
+        cell = Cell.new(self, x, y)
         @cells[x] << cell
       end
     end
