@@ -18,8 +18,20 @@ class Cell
     @dead = !@dead
   end
 
+  def transition?
+    return true if alive? && (underpopulated? || overcrowded?)
+    return true if dead? && ready_for_reproduction?
+    false
+  end
+
   def neighbours
     neighbours_coordinates.map { |x, y| world.cell_at(x, y) }.compact - [self]
+  end
+
+  private
+
+  def alive_neighbour_count
+    neighbours.select(&:alive?).length
   end
 
   def underpopulated?
@@ -30,14 +42,8 @@ class Cell
     alive_neighbour_count > 3
   end
 
-  def reproduce?
+  def ready_for_reproduction?
     alive_neighbour_count == 3
-  end
-
-  private
-
-  def alive_neighbour_count
-    neighbours.select(&:alive?).length
   end
 
   def neighbours_coordinates

@@ -21,18 +21,6 @@ class World
   end
 
   def tick
-    to_toggle = alive.select { |cell| cell.underpopulated? || cell.overcrowded? }
-    to_toggle += dead.select { |cell| cell.reproduce? }
-    to_toggle.each(&:toggle)
-  end
-
-  private
-
-  def alive
-    cells.select(&:alive?)
-  end
-
-  def dead
-    cells.select(&:dead?)
+    cells.select(&:transition?).each(&:toggle)
   end
 end
