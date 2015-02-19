@@ -34,7 +34,7 @@ describe World do
       cell
     end
 
-    let(:cell) { world.cell_at(0, 0) }
+    let(:cell) { world.cell_at(1, 1) }
     let(:neighbours) { cell.neighbours.first(neighbour_count) }
 
     context 'live cell' do
@@ -61,6 +61,11 @@ describe World do
       context 'with three live neighbours' do
         let(:neighbour_count) { 3 }
         it { is_expected.to be_alive }
+      end
+
+      context 'with more than three live neighbours' do
+        let(:neighbour_count) { 4 }
+        it { is_expected.to be_dead }
       end
     end
   end

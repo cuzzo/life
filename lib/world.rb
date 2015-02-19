@@ -21,7 +21,9 @@ class World
   end
 
   def next_generation!
-    alive_cells.select { |cell| cell.alive_neighbours.length < 2 }.each(&:toggle)
+    alive_cells.select do |cell|
+      cell.alive_neighbours.length < 2 || cell.alive_neighbours.length > 3
+    end.each(&:toggle)
   end
 
   private
