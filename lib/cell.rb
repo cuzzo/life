@@ -22,11 +22,23 @@ class Cell
     neighbours_coordinates.map { |x, y| world.cell_at(x, y) }.compact - [self]
   end
 
-  def alive_neighbour_count
-    neighbours.select(&:alive?).length
+  def underpopulated?
+    alive_neighbour_count < 2
+  end
+
+  def overcrowded?
+    alive_neighbour_count > 3
+  end
+
+  def reproduce?
+    alive_neighbour_count == 3
   end
 
   private
+
+  def alive_neighbour_count
+    neighbours.select(&:alive?).length
+  end
 
   def neighbours_coordinates
     [x - 1, x, x + 1].product([y - 1, y, y + 1])

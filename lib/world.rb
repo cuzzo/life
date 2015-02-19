@@ -21,8 +21,8 @@ class World
   end
 
   def tick
-    to_toggle = alive.select { |cell| !cell.alive_neighbour_count.between?(2, 3) }
-    to_toggle += dead.select { |cell| cell.alive_neighbour_count == 3 }
+    to_toggle = alive.select { |cell| cell.underpopulated? || cell.overcrowded? }
+    to_toggle += dead.select { |cell| cell.reproduce? }
     to_toggle.each(&:toggle)
   end
 
