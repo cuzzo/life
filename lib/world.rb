@@ -21,14 +21,24 @@ class World
   end
 
   def next_generation!
-    alive_cells.select do |cell|
+    to_toggle = alive_cells.select do |cell|
       cell.alive_neighbours.length < 2 || cell.alive_neighbours.length > 3
-    end.each(&:toggle)
+    end
+
+    to_toggle += dead_cells.select do |cell|
+      cell.alive_neighbours.length == 3
+    end
+
+    to_toggle.each(&:toggle)
   end
 
   private
 
   def alive_cells
     cells.select(&:alive?)
+  end
+
+  def dead_cells
+    cells.select(&:dead?)
   end
 end

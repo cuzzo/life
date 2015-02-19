@@ -36,12 +36,10 @@ describe World do
 
     let(:cell) { world.cell_at(1, 1) }
     let(:neighbours) { cell.neighbours.first(neighbour_count) }
+    before { neighbours.each(&:toggle) }
 
     context 'live cell' do
-      before do
-        cell.toggle
-        neighbours.each(&:toggle)
-      end
+      before { cell.toggle }
 
       context 'with no live neighbours' do
         let(:neighbour_count) { 0 }
@@ -66,6 +64,23 @@ describe World do
       context 'with more than three live neighbours' do
         let(:neighbour_count) { 4 }
         it { is_expected.to be_dead }
+      end
+    end
+
+    context 'dead cell' do
+      context 'with one live neighbour' do
+        let(:neighbour_count) { 1 }
+        it { is_expected.to be_dead }
+      end
+
+      context 'with two live neighbours' do
+        let(:neighbour_count) { 2 }
+        it { is_expected.to be_dead }
+      end
+
+      context 'with three live neighbours' do
+        let(:neighbour_count) { 3 }
+        it { is_expected.to be_alive }
       end
     end
   end
