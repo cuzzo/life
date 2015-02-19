@@ -20,25 +20,19 @@ class World
     @cells[x][y] if @cells[x]
   end
 
-  def next_generation!
-    to_toggle = alive_cells.select do |cell|
-      cell.alive_neighbours.length < 2 || cell.alive_neighbours.length > 3
-    end
-
-    to_toggle += dead_cells.select do |cell|
-      cell.alive_neighbours.length == 3
-    end
-
+  def tick
+    to_toggle = alive.select { |cell| !cell.alive_neighbour_count.between?(2, 3) }
+    to_toggle += dead.select { |cell| cell.alive_neighbour_count == 3 }
     to_toggle.each(&:toggle)
   end
 
   private
 
-  def alive_cells
+  def alive
     cells.select(&:alive?)
   end
 
-  def dead_cells
+  def dead
     cells.select(&:dead?)
   end
 end

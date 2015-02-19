@@ -28,9 +28,9 @@ describe World do
     end
   end
 
-  describe '#next_generation' do
+  describe '#tick' do
     subject do
-      world.next_generation!
+      world.tick
       cell
     end
 

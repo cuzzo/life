@@ -48,9 +48,9 @@ describe Cell do
     it { is_expected.to have_exactly(8).neighbours }
   end
 
-  describe '#alive_neighbours' do
-    subject { cell.alive_neighbours }
+  describe '#alive_neighbour_count' do
+    subject { cell.alive_neighbour_count }
     before { world.cell_at(2, 3).toggle }
-    it { is_expected.to include(world.cell_at(2, 3)) }
+    it { is_expected.to eq 1 }
   end
 end
