@@ -19,21 +19,6 @@ describe Cell do
     it { is_expected.to eq 2 }
   end
 
-  describe '#dead?' do
-    subject { cell.dead? }
-    it { is_expected.to eq true }
-  end
-
-  describe '#alive?' do
-    subject { cell.alive? }
-    it { is_expected.to eq false }
-  end
-
-  describe '#toggle' do
-    subject { cell.toggle }
-    it { is_expected.to eq false }
-  end
-
   describe '#neighbours' do
     subject { cell.neighbours }
 

@@ -1,4 +1,6 @@
 require './lib/cell'
+require './lib/dead_cell'
+require './lib/alive_cell'
 
 class World
   def initialize(width, height)
@@ -6,7 +8,7 @@ class World
     height.times do |x|
       @cells << []
       width.times do |y|
-        cell = Cell.new(self, x, y)
+        cell = DeadCell.new(self, x, y)
         @cells[x] << cell
       end
     end
@@ -20,7 +22,11 @@ class World
     @cells[x][y] if @cells[x]
   end
 
+  def toggle(cell)
+    @cells[cell.x][cell.y] = cell.toggle
+  end
+
   def tick
-    cells.select(&:transition?).each(&:toggle)
+    cells.each { |cell| toggle(cell) }
   end
 end

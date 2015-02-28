@@ -7,7 +7,7 @@ describe World do
     subject { world.cells }
 
     it { is_expected.to have_exactly(36).cells }
-    it { is_expected.to all be_dead }
+    it { is_expected.to all be_a(DeadCell) }
   end
 
   describe '#cell_at' do
@@ -36,51 +36,51 @@ describe World do
 
     let(:cell) { world.cell_at(1, 1) }
     let(:neighbours) { cell.neighbours.first(neighbour_count) }
-    before { neighbours.each(&:toggle) }
+    before { neighbours.each { |n| world.toggle(n) } }
 
     context 'live cell' do
-      before { cell.toggle }
+      before { world.toggle(cell) }
 
       context 'with no live neighbours' do
         let(:neighbour_count) { 0 }
-        it { is_expected.to be_dead }
+        it { is_expected.to be_a(DeadCell) }
       end
 
       context 'with one live neighbour' do
         let(:neighbour_count) { 1 }
-        it { is_expected.to be_dead }
+        it { is_expected.to be_a(DeadCell) }
       end
 
       context 'with two live neighbours' do
         let(:neighbour_count) { 2 }
-        it { is_expected.to be_alive }
+        it { is_expected.to be_a(AliveCell) }
       end
 
       context 'with three live neighbours' do
         let(:neighbour_count) { 3 }
-        it { is_expected.to be_alive }
+        it { is_expected.to be_a(AliveCell) }
       end
 
       context 'with more than three live neighbours' do
         let(:neighbour_count) { 4 }
-        it { is_expected.to be_dead }
+        it { is_expected.to be_a(DeadCell) }
       end
     end
 
     context 'dead cell' do
       context 'with one live neighbour' do
         let(:neighbour_count) { 1 }
-        it { is_expected.to be_dead }
+        it { is_expected.to be_a(DeadCell) }
       end
 
       context 'with two live neighbours' do
         let(:neighbour_count) { 2 }
-        it { is_expected.to be_dead }
+        it { is_expected.to be_a(DeadCell) }
       end
 
       context 'with three live neighbours' do
         let(:neighbour_count) { 3 }
-        it { is_expected.to be_alive }
+        it { is_expected.to be_a(AliveCell) }
       end
     end
   end

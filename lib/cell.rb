@@ -3,25 +3,6 @@ class Cell
 
   def initialize(world, x, y)
     @world, @x, @y = world, x, y
-    @dead = true
-  end
-
-  def dead?
-    @dead
-  end
-
-  def alive?
-    !@dead
-  end
-
-  def toggle
-    @dead = !@dead
-  end
-
-  def transition?
-    return true if alive? && (underpopulated? || overcrowded?)
-    return true if dead? && ready_for_reproduction?
-    false
   end
 
   def neighbours
@@ -31,19 +12,7 @@ class Cell
   private
 
   def alive_neighbour_count
-    neighbours.select(&:alive?).length
-  end
-
-  def underpopulated?
-    alive_neighbour_count < 2
-  end
-
-  def overcrowded?
-    alive_neighbour_count > 3
-  end
-
-  def ready_for_reproduction?
-    alive_neighbour_count == 3
+    neighbours.select { |cell| cell.is_a?(AliveCell) }.length
   end
 
   def neighbours_coordinates
