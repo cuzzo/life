@@ -3,30 +3,19 @@ require './lib/dead_cell'
 require './lib/alive_cell'
 
 class World
-  def initialize(width, height)
+  def initialize
     @cells = []
-    height.times do |x|
-      @cells << []
-      width.times do |y|
-        cell = DeadCell.new(self, x, y)
-        @cells[x] << cell
-      end
-    end
   end
 
-  def cells
-    @cells.flatten
+  def <<(cell)
+    @cells << cell
   end
 
   def cell_at(x, y)
-    @cells[x][y] if @cells[x]
-  end
-
-  def toggle(cell)
-    @cells[cell.x][cell.y] = cell.toggle
+    @cells.find { |cell| cell.x == x && cell.y == y }
   end
 
   def tick
-    cells.each { |cell| toggle(cell) }
+    @cells = @cells.map(&:toggle)
   end
 end
